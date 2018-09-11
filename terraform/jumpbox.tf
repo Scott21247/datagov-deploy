@@ -39,10 +39,11 @@ resource "aws_instance" "jumpbox" {
   instance_type = "t2.micro"
   associate_public_ip_address = "true"
   key_name = "${aws_key_pair.admin.key_name}"
-  vpc_security_group_ids = ["${aws_security_group.jumpbox.id}", "${module.db_catalog.security_group_id}"]
+  vpc_security_group_ids = ["${aws_security_group.jumpbox.id}"]
   subnet_id = "${module.vpc.public_subnets[0]}"
 
   tags {
+    Name = "${var.prefix}-jumpbox"
     Terraform = "true"
     Environment = "test"
     Owner = "${var.owner}"
