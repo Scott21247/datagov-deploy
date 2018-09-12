@@ -51,7 +51,7 @@ resource "aws_security_group" "ckan" {
 resource "aws_instance" "ckan" {
   count         = "${var.count_instances}"
   ami           = "${data.aws_ami.ubuntu_trusty.id}"
-  instance_type = "t2.micro"
+  instance_type = "t2.small"
   key_name = "${var.admin_key_name}"
   vpc_security_group_ids = ["${aws_security_group.ckan.id}", "${var.security_groups}"]
   subnet_id = "${var.subnet_id}"
@@ -66,7 +66,7 @@ resource "aws_instance" "ckan" {
 
 module "ckan_lb" {
   source = "terraform-aws-modules/elb/aws"
-  name               = "${var.prefix}-inventory-lb"
+  name               = "${var.prefix}-ckan-lb"
   internal           = false
   security_groups    = ["${aws_security_group.ckan.id}"]
   subnets            = ["${var.public_subnets}"]

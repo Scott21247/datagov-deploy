@@ -25,6 +25,15 @@
 - name: Remove new code
   file: path="{{ project_source_new_code_path }}" state=absent
 
+- name: Clone inventory-app
+  git:
+    repo: "{{ app_repo }}"
+    dest: /tmp/inventory-app
+    version: master
+
+- name: Install ckan dependencies
+  pip:
+    virtualenv: "{{ project_source_new_code_path }}"
 - include: build-pkgs.yml
   vars:
     pkg: "{{ ckan_pkgs }}"

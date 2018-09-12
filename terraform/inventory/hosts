@@ -1,0 +1,27 @@
+# This inventory is generated from terraform/bin/inventory.sh
+
+[catalog-web]
+
+
+[catalog-harvester]
+
+
+[solr]
+
+
+[inventory-web]
+ip-10-0-1-189.us-west-1.compute.internal
+
+[crm-web]
+
+[dashboard-web]
+
+[wordpress-web]
+
+[jekyll-web]
+
+[elasticsearch]
+
+[kibana]
+
+[efk_nginx]

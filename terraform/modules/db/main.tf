@@ -1,6 +1,6 @@
 resource "aws_security_group" "db" {
   name        = "db-${var.cluster_name}"
-  description = "Allow access to database"
+  description = "Allow access within database hosts"
   vpc_id      = "${var.vpc_id}"
 
   ingress {
@@ -10,12 +10,25 @@ resource "aws_security_group" "db" {
     self = true
   }
 
+  ingress {
+    from_port = 0
+    to_port = 0
+    protocol = "-1"
+    security_groups = ["${aws_security_group.db_access.id}"]
+  }
+
   egress {
     from_port = 0
     to_port = 0
     protocol = "-1"
     self = true
   }
+}
+
+resource "aws_security_group" "db_access" {
+  name        = "db-access-${var.cluster_name}"
+  description = "Allow access to database"
+  vpc_id      = "${var.vpc_id}"
 }
 
 resource "aws_db_subnet_group" "default" {

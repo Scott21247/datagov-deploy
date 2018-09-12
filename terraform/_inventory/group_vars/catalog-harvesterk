@@ -1,0 +1,2 @@
+# These variables are generated from terraform/bin/inventory.sh
+redis_password: redispassword

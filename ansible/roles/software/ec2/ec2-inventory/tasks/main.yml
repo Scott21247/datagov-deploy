@@ -5,17 +5,17 @@
 - include: config.yml
   tags: ['config']
 
-#- include: db-credential.yml
-#    tags: ['db']
+- include: db-credential.yml
+    tags: ['db']
 
-#- include: db-datastore.yml
-#    tags: ['db','db-datastore']
+- include: db-datastore.yml
+    tags: ['db','db-datastore']
 
-#- include: db-postgis.yml
-#    tags: ['db','db-postgis']
+- include: db-postgis.yml
+    tags: ['db','db-postgis']
 
-#- include: db-init.yml
-#    tags: ['db','db-init']
+- include: db-init.yml
+    tags: ['db','db-init']
 
-#- include: db-wait.yml
-#    tags: ['db','db-wait']
+- include: db-wait.yml
+    tags: ['db','db-wait']

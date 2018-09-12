@@ -34,6 +34,26 @@ resource "aws_security_group" "jumpbox" {
   }
 }
 
+resource "aws_security_group" "jumpbox_access" {
+  name        = "${var.prefix}-jumpbox-access"
+  description = "Allow administration from jumpbox"
+  vpc_id      = "${module.vpc.vpc_id}"
+
+  ingress {
+    from_port   = 22
+    to_port     = 22
+    protocol    = "tcp"
+    security_groups = ["${aws_security_group.jumpbox.id}"]
+  }
+
+  egress {
+    from_port       = 0
+    to_port         = 0
+    protocol        = "tcp"
+    security_groups = ["${aws_security_group.jumpbox.id}"]
+  }
+}
+
 resource "aws_instance" "jumpbox" {
   ami           = "${data.aws_ami.jumpbox.id}"
   instance_type = "t2.micro"

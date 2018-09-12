@@ -62,8 +62,7 @@ db_pycsw_replicas = [
 jumpbox_ip = 13.56.207.197
 ```
 
-You can then ssh into the jumpbox you just created. _TODO: use the jumpbox
-playbook and turn this into an AMI._
+You can then ssh into the jumpbox you just created.
 
     $ make jumpbox
     $ sudo apt-get install -y git python-pip python-virtualenv
@@ -72,4 +71,33 @@ playbook and turn this into an AMI._
     $ pip install ansible~=2.5.4
     $ git clone git@github.com:GSA/datagov-deploy.git
 
-_TODO: Generate ansible inventory from terraform output._
+_TODO: Generate ansible inventory from terraform output._ A `hosts` file is
+generated which you can copy to the jumpbox.
+
+You can also create specific instances. First create the VPC.
+
+    $ terraform apply -target=module.vpc
+
+Then you can create the jumpbox.
+
+    $ terraform apply -target=aws_instance.jumpbox
+
+And then maybe inventory.
+
+    $ terraform apply -target=module.inventory
+
+
+## Running playbooks from the test jumpbox
+
+When connecting to the jumpbox, forward your ssh-agent so that you can easily
+connect to other machines as well as github.
+
+    $ ssh -A -l ubuntu $jumpbox
+
+Clone the datagov-deploy repo.
+
+    $ git clone git@github.com:GSA/datagov-deploy.git
+
+Run the playbook as usual with the generated inventory.
+
+    $ ansible-playbook ansible/inventory.yml -i ../inventory/ -l inventory-web --skip-tags="solr,db,deploy-rollback,trendmicro"

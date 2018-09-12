@@ -22,6 +22,18 @@ output "db_pycsw_replicas" {
   value = ["${module.db_pycsw.replicas}"]
 }
 
+output "db_inventory_master" {
+  value = ["${module.db_inventory.master}"]
+}
+
+output "db_inventory_datastore_master" {
+  value = ["${module.db_inventory_datastore.master}"]
+}
+
+output "db_inventory_datastore_replicas" {
+  value = ["${module.db_inventory_datastore.replicas}"]
+}
+
 output "harvester_ips" {
   value = ["${module.catalog_harvester.instance_ips}"]
 }
