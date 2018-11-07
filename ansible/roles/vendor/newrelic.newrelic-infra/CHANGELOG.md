@@ -2,13 +2,17 @@
 
 This file is used to list changes made in each version of the `nrinfragent` Ansible role.
 
-## 0.4.0 (2018-05-29)
+## master (unreleased)
 
 IMPROVEMENTS:
 
 * Update README with better instructions for usage with Ansible Galaxy
-* Change the name of the yum repository to comply with installation instructions
-  provided by New Relic
+* Installs the on-host integrations package for the Infrastructure agent
+* Adds support for SUSE Linux Enterprise
+* Fix error when specifying version number for the agent with
+`nrinfragent_version`, it only worked with `nrinfragent_version: "*"` and
+`nrinfragent_state: "latest"`
+
 
 ## 0.3.3 (2018-05-14)
 

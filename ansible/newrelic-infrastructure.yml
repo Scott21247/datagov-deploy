@@ -4,4 +4,4 @@
   become_method: sudo
   remote_user: ubuntu
   roles:
-    - monitoring/newrelic/infrastructure-agent-ansible
+    - newrelic.newrelic-infra

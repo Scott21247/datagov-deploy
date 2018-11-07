@@ -4,4 +4,6 @@
   become_method: sudo
   remote_user: ubuntu
   roles:
-    - monitoring/newrelic/python-agent-ansible
+    - role: monitoring/newrelic/python-agent-ansible
+      vars:
+        nrinfragent_license_key: "{{ vault_nrinfragent_license_key }}"

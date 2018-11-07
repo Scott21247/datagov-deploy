@@ -23,6 +23,7 @@
 - src: nickhammond.logrotate
 - src: nleutner.newrelic-php
 - src: newrelic.newrelic-infra
+  version: 0.5.0
 - src: rvm_io.ruby
   version: v2.0.1
 

@@ -133,9 +133,12 @@ suites:
 #  - name: nessus
 #    provisioner:
 #      playbook: nessus.yml
-#  - name: newrelic-infrastructure
-#    provisioner:
-#      playbook: newrelic-infrastructure.yml
+  - name: newrelic-infrastructure
+    provisioner:
+      playbook: newrelic-infrastructure.yml
+      extra_vars:
+        nrinfragent_config:
+          license_key: fake-key
 #  - name: newrelic-php
 #    provisioner:
 #      playbook: newrelic-php.yml
