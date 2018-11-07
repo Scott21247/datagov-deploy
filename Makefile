@@ -8,6 +8,7 @@ KITCHEN_SUITES := \
   inventory-web \
   jekyll \
   logrotate \
+  newrelic-infrastructure \
   web-proxy
 
 MOLECULE_SUITES := \

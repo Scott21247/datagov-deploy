@@ -104,6 +104,12 @@ jobs:
       KITCHEN_SUITE: logrotate
     steps: *test-kitchen-steps
 
+  test-kitchen-newrelic-infrastructure:
+    machine: true
+    environment:
+      KITCHEN_SUITE: newrelic-infrastructure
+    steps: *test-kitchen-steps
+
   test-kitchen-web-proxy:
     machine: true
     environment:
@@ -131,5 +137,6 @@ workflows:
       - test-kitchen-inventory-web
       - test-kitchen-jekyll
       - test-kitchen-logrotate
+      - test-kitchen-newrelic-infrastructure
       - test-kitchen-web-proxy
       - test-molecule-software/ckan/native-login
