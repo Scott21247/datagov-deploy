@@ -6,28 +6,30 @@
   action: apt pkg={{item}} state=installed
   with_items:
     - acl
-    - htop
     - atool
-    - ruby
-    - python-virtualenv
-    - python-setuptools
-    - git
-    - python-dev
-    - ruby-dev
-    - postgresql-client
     - bison
-    - python-pip
+    - git
+    - htop
+    - lib32z1-dev
     - libbz2-dev
+    - libdb-dev
+    - libffi-dev
+    - libgdbm-dev
     - libgeos-c1
+    - libpq-dev
+    - libssl-dev
     - libxml2-dev
     - libxslt1-dev
-    - lib32z1-dev
-    - libpq-dev
-    - libffi-dev
-    - libssl-dev
     - ntp
+    - postgresql-client
+    - python-dev
+    - python-pip
+    - python-setuptools
+    - python-virtualenv
+    - ruby
+    - ruby-dev
 
-# Upgrade python to 2.7.10
+# Build a more recent version of python than os provides
 - include: python-upgrade.yml
 
 # The Network Time Protocol is used to manage the system clock over a network

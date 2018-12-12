@@ -1,0 +1,19 @@
+---
+- name: remove any existing python files
+  file: dest=/var/tmp/{{ python_version_name }} state=absent
+
+- name: unpack new python
+  unarchive:
+    src: "{{ python_version_url }}"
+    dest: /var/tmp/
+    remote_src: yes
+
+- name: configure new python
+  command: ./configure --prefix {{ python_version_directory }} --enable-ipv6 --enable-unicode=ucs4 --enable-shared
+  args:
+    chdir: /var/tmp/{{ python_version_name }}
+
+- name: install new python
+  shell: "umask 022; make && make install"
+  args:
+    chdir: /var/tmp/{{ python_version_name }}
