@@ -5,6 +5,9 @@ app_repo: https://github.com/GSA/catalog-app.git
 # used in  production.ini/ckan_site_url and hosts
 ckan_site_domain: "https://catalog.data.gov"
 
+# Version of catalog-app to clone from git
+catalog_app_version: master
+
 # provide some default values to be overwritten later by group vars and host vars...
 project_source_rollback_path: /usr/lib/ckan-rollback
 project_source_new_code_path: /usr/lib/ckan-new

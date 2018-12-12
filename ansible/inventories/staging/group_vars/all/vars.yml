@@ -69,6 +69,7 @@ web_key: "{{ vault_web_key }}"
 web_csr: "{{ vault_web_csr }}"
 
 # ckan
+catalog_app_version: staging
 # Auth cookie `auth_tkt` must be HTTPS-only (SECURE) on Production
 who_secure: True
 

@@ -71,6 +71,7 @@ web_crt: "{{ vault_web_crt }}"
 web_key: "{{ vault_web_key }}"
 
 # ckan
+catalog_app_version: develop
 # Auth cookie `auth_tkt` must be HTTPS-only (SECURE) on Production
 # ELB is not setup with HTTPS in test
 who_secure: false
