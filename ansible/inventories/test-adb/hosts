@@ -1,9 +1,13 @@
 # Define ec2 tag groups
 [tag_group_catalog_harvester]
 [tag_group_catalog_web]
+[tag_group_crm]
+[tag_group_dashboard]
 [tag_group_inventory_web]
+[tag_group_jekyll]
 [tag_group_jumpbox]
 [tag_group_solr]
+[tag_group_wordpress]
 
 
 [catalog-harvester:children]
@@ -12,8 +16,17 @@ tag_group_catalog_harvester
 [catalog-web:children]
 tag_group_catalog_web
 
+[crm-web:children]
+tag_group_crm
+
+[dashboard-web:children]
+tag_group_dashboard
+
 [inventory-web:children]
 tag_group_inventory_web
+
+[jekyll-web:children]
+tag_group_jekyll
 
 [jumpbox:children]
 tag_group_jumpbox
@@ -21,11 +34,10 @@ tag_group_jumpbox
 [solr:children]
 tag_group_solr
 
+[wordpress-web:children]
+tag_group_wordpress
 
-[crm-web]
-[dashboard-web]
+
 [efk_nginx]
 [elasticsearch]
-[jekyll-web]
 [kibana]
-[wordpress-web]
