@@ -14,7 +14,8 @@ KITCHEN_SUITES := \
 MOLECULE_SUITES := \
   software/ci \
   software/ckan/native-login \
-  software/common/tls
+  software/common/tls \
+  software/jumpbox
 
 # Create test-kitchen-<suite> targets
 KITCHEN_SUITE_TARGETS := $(patsubst %,test-kitchen-%,$(KITCHEN_SUITES))
