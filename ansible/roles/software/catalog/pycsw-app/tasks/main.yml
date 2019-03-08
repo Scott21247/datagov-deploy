@@ -6,6 +6,8 @@
     version={{ pycsw_app_version }}
     force=yes
     umask=0022
+  notify: reload apache2
+  register: git_pycsw
 
 - name: install python dependencies
   pip: >-
@@ -13,22 +15,29 @@
     requirements={{ pycsw_virtualenv_dir }}/src/pycsw/requirements.txt
     state=present
     umask=0022
+  when:  git_pycsw is changed
+  notify: reload apache2
 
 - name: run setup build for pycsw
   command: chdir={{ pycsw_virtualenv_dir }}/src/pycsw/ ../../bin/python setup.py build
   tags: skip_ansible_lint
+  when:  git_pycsw is changed
 
 - name: run setup install for pycsw
   command: chdir={{ pycsw_virtualenv_dir }}/src/pycsw/ ../../bin/python setup.py install
   tags: skip_ansible_lint
+  when:  git_pycsw is changed
+  notify: reload apache2
 
 - name: link pycsw configuration files
   file: src={{ item.src }} dest={{ item.dst }} state=link force=yes owner=root group=root
+  when:  git_pycsw is changed
   with_items:
     - dst: /etc/ckan/pycsw.wsgi
       src: "{{ pycsw_virtualenv_dir }}/src/pycsw/csw.wsgi"
     - dst: /etc/cron.d/pycsw
       src: "{{ pycsw_virtualenv_dir }}/src/pycsw/.datagov/crontab"
+  notify: reload apache2
 
 - name: install pycsw-all.cfg
   template: src=pycsw-cfg.j2 dest=/etc/ckan/pycsw-all.cfg mode=0640 owner=root group=www-data
@@ -36,6 +45,7 @@
     csw_url_path: "{{ csw_url_path_all }}"
     csw_abstract: "{{ csw_abstract_all }}"
     csw_filter: "{{ csw_filter_all }}"
+  notify: reload apache2
 
 - name: install pycsw-collection.cfg
   template: src=pycsw-cfg.j2 dest=/etc/ckan/pycsw-collection.cfg mode=0640 owner=root group=www-data
@@ -43,3 +53,4 @@
     csw_url_path: "{{ csw_url_path_collection }}"
     csw_abstract: "{{ csw_abstract_collection }}"
     csw_filter: "{{ csw_filter_collection }}"
+  notify: reload apache2
