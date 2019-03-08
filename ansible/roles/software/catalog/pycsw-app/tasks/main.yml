@@ -34,7 +34,7 @@
   when:  git_pycsw is changed
   with_items:
     - dst: /etc/ckan/pycsw.wsgi
-      src: "{{ pycsw_virtualenv_dir }}/src/pycsw/csw.wsgi"
+      src: "{{ pycsw_virtualenv_dir }}/src/pycsw/.datagov/wsgi"
     - dst: /etc/cron.d/pycsw
       src: "{{ pycsw_virtualenv_dir }}/src/pycsw/.datagov/crontab"
   notify: reload apache2
