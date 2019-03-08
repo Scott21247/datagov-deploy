@@ -17,10 +17,3 @@
 - name: Config solr_server in production.ini
   replace: dest=/etc/ckan/production.ini regexp='(\s*solr_server\s*=).*$' replace='\1 {{solr_server}}'
   when: solr_server != ""
-
-- name: Config pycsw_db_server in pycsw config files
-  replace: dest={{ item }} regexp='(\s*db_server\s*=).*$' replace='\1 {{pycsw_db_server}}'
-  when: pycsw_db_server != ""
-  with_items:
-    - /etc/ckan/pycsw-all.cfg
-    - /etc/ckan/pycsw-collection.cfg
