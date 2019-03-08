@@ -9,3 +9,4 @@ catalog_db_pass: pass
 catalog_pycsw_db_name: pycsw
 
 pycsw_app_version: ckan
+pycsw_virtualenv_dir: /usr/lib/ckan
