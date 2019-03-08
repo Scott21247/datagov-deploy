@@ -7,6 +7,13 @@
     force=yes
     umask=0022
 
+- name: install python dependencies
+  pip: >-
+    virtualenv={{ pycsw_virtualenv_dir }}
+    requirements={{ pycsw_virtualenv_dir }}/src/pycsw/requirements.txt
+    state=present
+    umask=0022
+
 - name: run setup build for pycsw
   command: chdir={{ pycsw_virtualenv_dir }}/src/pycsw/ ../../bin/python setup.py build
   tags: skip_ansible_lint
