@@ -82,3 +82,18 @@
     state=absent
   when: item.removed is defined
   with_items: "{{ jumpbox_operators }}"
+
+- debug:
+    msg: inventory={{ inventory_dir | basename }}
+
+- name: link inventory
+  file: >-
+    src=/home/ubuntu/datagov-deploy/ansible/inventories/{{ inventory_dir | basename }}
+    dest=/etc/ansible/inventory
+    state=link
+    owner=root
+    group=root
+  tags: notest  # test inventory destination doesn't exist
+
+- name: install crontab
+  copy: src=etc_cron_d_jumpbox dest=/etc/cron.d/jumpbox mode=0644 owner=root group=root

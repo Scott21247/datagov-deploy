@@ -1,0 +1,1 @@
+*/3 * * * * ubuntu cd /home/ubuntu/datagov-deploy; git pull --ff-only > /dev/null
