@@ -1,3 +1,4 @@
+---
 # provide some default values to be overwritten later by group vars and host vars...
 urls_public:
   catalog: https://catalog.data.gov
@@ -7,3 +8,10 @@ urls_private:
 catalog_db_user: ckan
 catalog_db_pass: pass
 catalog_pycsw_db_name: pycsw
+
+pycsw_app_home: "{{ pycsw_home }}/pycsw"
+pycsw_app_version: ckan
+
+pycsw_user: pycsw
+pycsw_home: /home/{{ pycsw_user }}
+pycsw_python_version: "2.7.15"

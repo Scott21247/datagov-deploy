@@ -1,21 +1,55 @@
 ---
+- name: install os packages
+  apt: name=git state=present
+
+- name: create pycsw user
+  user: name={{ pycsw_user }} home={{ pycsw_home }} system=yes state=present comment="pycsw web service"
+
+- name: create pycsw home directory
+  file: dest={{ pycsw_home }} owner={{ pycsw_user }} group={{ pycsw_user }} mode=0755 state=directory
+
+  # TODO https://github.com/avanov/ansible-galaxy-pyenv/pull/29
+- name: install zlib-dev for bionic
+  apt: name={{ pycsw_addtional_dev_packages }} state=present
+
+- name: install recent python
+  include_role:
+    name: avanov.pyenv
+  vars:
+    pyenv_path: "{{ pycsw_home }}/.pyenv"
+    pyenv_owner: "{{ pycsw_user }}"
+    pyenv_global: "{{ pycsw_python_version }}"
+    pyenv_python_versions:
+      - "{{ pycsw_python_version }}"
+    pyenv_virtualenvs: []
+
 - name: get pycsw version
-  git: repo=https://github.com/GSA/pycsw.git dest=/usr/lib/ckan/src/pycsw version=ckan
+  git: repo=https://github.com/GSA/pycsw.git dest={{ pycsw_app_home }} version={{ pycsw_app_version }} umask=0022
+  become: yes
+  become_user: "{{ pycsw_user }}"
+  register: git_pycsw
 
-- name: run setup build for pycsw
-  command: chdir=/usr/lib/ckan/src/pycsw/ ../../bin/python setup.py build
+- name: build and install pycsw
+  shell: |
+    python setup.py build
+    python setup.py install
+  args:
+    chdir: "{{ pycsw_app_home }}"
+    executable: /bin/bash
+    umask: 0022
+  become: yes
+  become_user: "{{ pycsw_user }}"
   tags: skip_ansible_lint
 
-- name: run setup install for pycsw
-  command: chdir=/usr/lib/ckan/src/pycsw/ ../../bin/python setup.py install
-  tags: skip_ansible_lint
+  # TODO configs should be in pycsw-specific directory
+- name: ensure ckan config directory exists
+  file: dest=/etc/ckan mode=0755
 
-- name: install pyproj
-  pip: name=pyproj version=1.9.3 virtualenv=/usr/lib/ckan/
+  # TODO configs should be in pycsw-specific directory
+- name: ensure ckan bin directory exists
+  file: dest=/usr/lib/ckan/bin mode=0755
 
-- name: install geolinks
-  pip: name=geolinks version=0.2.0 virtualenv=/usr/lib/ckan/
-
+  # TODO configs should be in pycsw-specific directory
 - name: copy pycsw configuration files
   copy: src={{item}} dest=/{{item}} mode=0644
   with_items:
@@ -29,7 +63,7 @@
     csw_filter: "{{ csw_filter_all }}"
 
 - name: config pycsw-all.cfg
-  template: src=pycsw-cfg.j2 dest=/etc/ckan/pycsw-all.cfg
+  template: src=pycsw-cfg.j2 dest=/etc/ckan/pycsw-all.cfg mode=0640 owner={{ pycsw_user }} group={{ pycsw_user }}
 
 - name: set facts2
   set_fact:
@@ -38,7 +72,7 @@
     csw_filter: "{{ csw_filter_collection }}"
 
 - name: config pycsw-collection.cfg
-  template: src=pycsw-cfg.j2 dest=/etc/ckan/pycsw-collection.cfg
+  template: src=pycsw-cfg.j2 dest=/etc/ckan/pycsw-collection.cfg mode=0640 owner={{ pycsw_user }} group={{ pycsw_user }}
 
 - name: copy pycsw configuration files
   copy: src={{item}} dest=/{{item}} mode=0644
