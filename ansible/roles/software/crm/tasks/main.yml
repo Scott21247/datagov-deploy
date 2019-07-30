@@ -1,0 +1,15 @@
+---
+- name: Run Prechecks
+  include_tasks: precheck.yml
+
+- name: Initialize CRM Dependencies
+  include_tasks: init.yml
+
+- name: Deploy Application
+  include_tasks: deploy.yml
+
+- name: Cleanup After Deployment
+  include_tasks: cleanup.yml
+
+- name: Migrate Data
+  include_tasks: migrate.yml

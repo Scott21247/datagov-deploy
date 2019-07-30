@@ -1,0 +1,38 @@
+---
+dependency:
+  name: galaxy
+driver:
+  name: docker
+lint:
+  name: yamllint
+  enabled: true
+platforms:
+  - name: trusty
+    image: ubuntu:trusty
+#  - name: bbionic
+#    image: ubuntu:bionic
+provisioner:
+  name: ansible
+  ansible_args:
+    - --tags=db-init,migrate
+  lint:
+    name: ansible-lint
+    enabled: true
+scenario:
+  name: default
+  test_sequence:
+    - lint
+    - destroy
+    - dependency
+    - syntax
+    - create
+    - prepare
+    - converge
+    # - idempotence
+    - side_effect
+    - verify
+    - destroy
+verifier:
+  name: testinfra
+  lint:
+    name: flake8
