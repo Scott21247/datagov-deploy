@@ -7,10 +7,10 @@ lint:
   name: yamllint
   enabled: true
 platforms:
-  - name: trusty
-    image: ubuntu:trusty
-#  - name: bbionic
-#    image: ubuntu:bionic
+  #  - name: trusty
+  #    image: ubuntu:trusty
+  - name: bionic
+    image: ubuntu:bionic
 provisioner:
   name: ansible
   ansible_args:

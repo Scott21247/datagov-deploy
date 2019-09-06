@@ -28,10 +28,10 @@
     mode: 0644
 
 - name: Installing required packages
-  package: name={{ item }} state=installed
+  package: name={{ item }} state=present
   with_items:
-    - mariadb-client-5.5
-    - php7.0-zip
+    - mariadb-client-10.1
+    - php{{ php_version }}-zip
     - nginx-extras
 
 - name: Remove old rollback code

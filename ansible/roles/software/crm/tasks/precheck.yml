@@ -1,18 +1,19 @@
---- # Initial precheck
+---  # Initial precheck
 
 - name: Ensure github.com is a known host
   lineinfile:
     dest: "/home/ubuntu/.ssh/known_hosts"
-    create: yes
+    create: true
     state: present
     line: "{{ lookup('pipe', 'ssh-keyscan -t rsa github.com') }}"
     regexp: "^github\\.com"
-    owner: "ubuntu"
+    owner: "root"
 
 - name: Ensure we have access to github
-  shell: ssh -T git@github.com
+  command: ssh -T git@github.com
   register: github_test
   failed_when: "'Permission denied' in github_test.stderr"
+  changed_when: false
 
 - name: Github connection
   debug: msg="{{ github_test.stderr.split(',')[0] }}"

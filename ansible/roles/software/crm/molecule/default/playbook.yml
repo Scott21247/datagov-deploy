@@ -1,10 +1,17 @@
 ---
 - name: Converge
   hosts: all
+  vars:
+    php_version: '7.3'
+    nginx_remove_default_vhost: true
+
   roles:
+    - role: geerlingguy.php-versions
     - role: geerlingguy.php
     - role: geerlingguy.git
     - role: geerlingguy.nginx
+      nginx_extra_conf_options: |
+        include /etc/nginx/modules-enabled/*.conf;
     - role: geerlingguy.php-mysql
     - role: geerlingguy.php-memcached
     - role: geerlingguy.composer
